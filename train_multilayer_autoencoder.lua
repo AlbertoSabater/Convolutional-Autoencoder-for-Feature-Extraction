@@ -18,9 +18,9 @@ params = {
     game = "ms_pacman",
     dataFile = "../stored_frames/frames_ms_pacman_0419.t7",
     filename = "ms_pacman" .. "_encoder" .. "_" .. os.date("%m%d"),
-    maxIter = 200,
+    maxIter = 75,
     learning_rate = 0.01,
-    epochs = 1000,
+    epochs = 2000,
     numLayers = 2,
     feautureRelation = 2
 }
@@ -104,8 +104,7 @@ for t=1, params.epochs do
   print('Epoch ' .. t, "\t", os.date("%x %X"))
 
   trainer:train(dataset)
+  torch.save("../stored_kernels/autoencoders/" .. params.filename .. ".t7", { network = net:get(1), model = net } )
 
-  torch.save("../trained_networks/autoencoders/" .. params.filename .. ".t7", { model = net } )
-
-  print ("Network saved", "\t", os.date("%x %X"))
+  print ("Network saved", params.filename, "\t", os.date("%x %X"))
 end
